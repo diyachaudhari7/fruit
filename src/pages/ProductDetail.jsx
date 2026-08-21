@@ -15,9 +15,11 @@ import {
   Droplet,
   HeartHandshake,
   RotateCcw,
-  MapPin
+  MapPin,
+  Heart
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import { Header } from '../components/Header';
 import { FeaturesStrip } from '../components/FeaturesStrip';
 
@@ -25,6 +27,7 @@ export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { isSaved, toggleSavedItem } = useWishlist();
   const product = MOCK_DATA.products.find(p => p.id === id);
   const category = MOCK_DATA.categories.find(c => c.id === product?.categoryId);
   const [qty, setQty] = useState(1);
@@ -72,12 +75,18 @@ export function ProductDetail() {
           {/* Left: Image Gallery */}
           <div className="lg:w-1/2 flex gap-4">
             {/* Main Image */}
-            <div className="flex-1 bg-gray-50 rounded-3xl relative overflow-hidden aspect-square border border-gray-100 p-4">
+            <div className="flex-1 bg-gray-50 rounded-3xl relative overflow-hidden aspect-square border border-gray-100 p-4 group">
               {isOrganic && (
                 <div className="absolute top-6 right-6 z-10 bg-white text-primary px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm border border-green-50">
                   <Leaf size={14} /> Organic
                 </div>
               )}
+              <button 
+                className="absolute top-6 left-6 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-red-500 shadow-sm hover:bg-red-50"
+                onClick={(e) => { e.stopPropagation(); toggleSavedItem(product); }}
+              >
+                <Heart size={20} className={isSaved(product.id) ? "fill-current" : ""} />
+              </button>
               <img src={product.image} alt={product.name} className="w-full h-full object-cover rounded-2xl drop-shadow-sm" />
               <button className="absolute bottom-6 right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 shadow-md hover:text-primary transition-colors">
                 <Maximize2 size={18} />
@@ -157,17 +166,7 @@ export function ProductDetail() {
                   </div>
                 </div>
                 
-                <div className="w-full sm:w-auto flex-1">
-                   <p className="text-xs font-bold text-textMain mb-2">Select Unit</p>
-                   <div className="relative w-full">
-                     <select className="w-full h-12 appearance-none border border-gray-200 rounded-xl bg-white px-4 text-sm font-semibold text-textMain focus:outline-none focus:border-primary cursor-pointer">
-                        <option>1 {product.unit}</option>
-                        <option>2 {product.unit}</option>
-                        <option>3 {product.unit}</option>
-                     </select>
-                     <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                   </div>
-                </div>
+
 
                 <Button className="w-full sm:w-auto h-12 px-8 shadow-md rounded-xl font-bold flex-1 md:flex-none" onClick={handleAddToCart}>
                   <ShoppingCart size={18} className="mr-2" /> Add to Cart
@@ -186,53 +185,12 @@ export function ProductDetail() {
                    <p className="text-[10px] text-textMuted font-medium">Delivery by <strong className="text-textMain font-bold">Tomorrow, 21 May</strong></p>
                  </div>
                </div>
-               <button className="text-xs font-bold text-primary hover:underline">Change</button>
             </div>
 
           </div>
         </div>
 
-        {/* Middle: Product Features Strip */}
-        <div className="bg-white border border-gray-100 rounded-3xl shadow-sm p-8 mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
-             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
-               <div className="w-12 h-12 rounded-full bg-green-50 text-primary flex items-center justify-center shrink-0">
-                 <MapPin size={20} />
-               </div>
-               <div>
-                 <h4 className="font-bold text-textMain text-sm mb-1">Sourced Locally</h4>
-                 <p className="text-xs text-textMuted">From trusted local farms</p>
-               </div>
-             </div>
-             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
-               <div className="w-12 h-12 rounded-full bg-green-50 text-primary flex items-center justify-center shrink-0">
-                 <HeartHandshake size={20} />
-               </div>
-               <div>
-                 <h4 className="font-bold text-textMain text-sm mb-1">Handpicked</h4>
-                 <p className="text-xs text-textMuted">Carefully selected for you</p>
-               </div>
-             </div>
-             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
-               <div className="w-12 h-12 rounded-full bg-green-50 text-primary flex items-center justify-center shrink-0">
-                 <ShieldCheck size={20} />
-               </div>
-               <div>
-                 <h4 className="font-bold text-textMain text-sm mb-1">Hygienically Packed</h4>
-                 <p className="text-xs text-textMuted">Packed with care & hygiene</p>
-               </div>
-             </div>
-             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
-               <div className="w-12 h-12 rounded-full bg-green-50 text-primary flex items-center justify-center shrink-0">
-                 <RotateCcw size={20} />
-               </div>
-               <div>
-                 <h4 className="font-bold text-textMain text-sm mb-1">Easy Returns</h4>
-                 <p className="text-xs text-textMuted">100% satisfaction guarantee</p>
-               </div>
-             </div>
-          </div>
-        </div>
+
 
         {/* Bottom Section: Details & Upsell */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -300,20 +258,34 @@ export function ProductDetail() {
           <div className="lg:col-span-5">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-heading font-bold text-lg text-textMain">You May Also Like</h3>
-              <button className="text-xs font-bold text-primary hover:underline">View All</button>
+              <button 
+                className="text-xs font-bold text-primary hover:underline"
+                onClick={() => navigate(product.categoryId ? `/category/${product.categoryId}` : '/categories')}
+              >
+                View All
+              </button>
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {MOCK_DATA.products.slice(1, 5).map(p => (
                 <div key={p.id} className="bg-white border border-gray-100 rounded-xl overflow-hidden group cursor-pointer hover:border-primary/30 hover:shadow-md transition-all flex flex-col" onClick={() => navigate(`/product/${p.id}`)}>
                   <div className="aspect-square bg-gray-50 p-2 relative">
+                    <button 
+                      className="absolute top-2 left-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-red-500 shadow-sm z-10 hover:bg-red-50"
+                      onClick={(e) => { e.stopPropagation(); toggleSavedItem(p); }}
+                    >
+                      <Heart size={12} className={isSaved(p.id) ? "fill-current" : ""} />
+                    </button>
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform" />
                   </div>
                   <div className="p-3 flex flex-col flex-1">
                     <h4 className="text-xs font-bold text-textMain line-clamp-1 mb-2">{p.name}</h4>
                     <div className="flex items-center justify-between mt-auto">
                       <p className="text-xs font-bold text-primary">${p.price}<span className="text-[10px] text-textMuted font-medium">/{p.unit}</span></p>
-                      <button className="w-5 h-5 rounded-full border border-gray-200 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-[10px]">
+                      <button 
+                        className="w-5 h-5 rounded-full border border-gray-200 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-[10px]"
+                        onClick={(e) => { e.stopPropagation(); addItem(p); }}
+                      >
                         +
                       </button>
                     </div>

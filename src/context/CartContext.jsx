@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useState } from 'react';
 
 const CartContext = createContext();
 
@@ -10,14 +10,9 @@ const initialState = {
 function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
       let newItems = [...state.items];
-      
-      if (existingItemIndex >= 0) {
-        newItems[existingItemIndex].quantity += action.payload.quantity;
-      } else {
-        newItems.push(action.payload);
-      }
+      // Only push new items since we handle duplicates in the addItem function now
+      newItems.push(action.payload);
       
       const newTotal = newItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
       return { ...state, items: newItems, total: newTotal };
@@ -43,8 +38,23 @@ function cartReducer(state, action) {
 
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [toastMessage, setToastMessage] = useState(null);
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
+  };
 
   const addItem = (item, quantity = 1) => {
+    const exists = state.items.some(i => i.id === item.id);
+    if (exists) {
+      showToast('Item already added to cart!');
+      return;
+    }
+    
+    showToast(`${item.name} added to cart!`);
     dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity } });
   };
 
@@ -67,6 +77,11 @@ export function CartProvider({ children }) {
   return (
     <CartContext.Provider value={{ cart: state, addItem, removeItem, updateQuantity, clearCart }}>
       {children}
+      {toastMessage && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <p className="text-sm font-medium">{toastMessage}</p>
+        </div>
+      )}
     </CartContext.Provider>
   );
 }

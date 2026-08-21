@@ -4,11 +4,12 @@ import { useCart } from '../context/CartContext';
 import { ChevronRight, Trash2, Leaf, ShoppingCart, MapPin, CreditCard, CheckCircle, Info, ShieldCheck } from 'lucide-react';
 import { Header } from '../components/Header';
 import { FeaturesStrip } from '../components/FeaturesStrip';
+import { ProgressBanner } from '../components/ProgressBanner';
 import { MOCK_DATA } from '../data/mockData';
 
 export function Cart() {
   const navigate = useNavigate();
-  const { cart, updateQuantity, removeItem } = useCart();
+  const { cart, updateQuantity, removeItem, addItem } = useCart();
 
   const deliveryFee = 2.99;
   const isFreeDelivery = cart.total >= 49;
@@ -16,8 +17,8 @@ export function Cart() {
   const amountToFreeDelivery = Math.max(0, freeDeliveryThreshold - cart.total);
   const deliveryProgress = Math.min(100, (cart.total / freeDeliveryThreshold) * 100);
   
-  const estimatedTax = cart.total * 0.08; // Assuming 8% tax for UI purposes
-  const finalTotal = cart.total + (isFreeDelivery ? 0 : deliveryFee) + estimatedTax;
+  const gst = cart.total * 0.05; // 5% GST
+  const finalTotal = cart.total + (isFreeDelivery ? 0 : deliveryFee) + gst;
 
   const handleClearCart = () => {
     cart.items.forEach(item => removeItem(item.id));
@@ -37,53 +38,7 @@ export function Cart() {
           <span className="font-semibold text-textMain">My Cart</span>
         </div>
 
-        {/* Top Banner & Progress Tracker */}
-        <div className="bg-[#Edf5ee] rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-green-50 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-full bg-white shadow-sm overflow-hidden flex-shrink-0 p-2 relative">
-              {/* Using a placeholder for the basket image */}
-              <img src="https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Fresh Basket" className="w-full h-full object-cover rounded-full" />
-              <div className="absolute bottom-0 right-0 bg-green-500 text-white p-1 rounded-full border-2 border-white">
-                <Leaf size={12} />
-              </div>
-            </div>
-            <div>
-              <h2 className="text-xl font-heading font-bold text-primary mb-1">Freshness delivered to your door!</h2>
-              <p className="text-textMuted text-sm">Add more fresh items and enjoy healthy living.</p>
-            </div>
-          </div>
-          
-          {/* Progress Tracker */}
-          <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-            <div className="flex flex-col items-center gap-2 min-w-[60px]">
-              <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
-                <ShoppingCart size={18} />
-              </div>
-              <span className="text-xs font-bold text-primary">Cart</span>
-            </div>
-            <div className="w-8 md:w-12 h-px bg-gray-300 -mt-6"></div>
-            <div className="flex flex-col items-center gap-2 min-w-[60px]">
-              <div className="w-10 h-10 rounded-full bg-white text-gray-400 border border-gray-200 flex items-center justify-center">
-                <MapPin size={18} />
-              </div>
-              <span className="text-xs font-medium text-textMuted">Address</span>
-            </div>
-            <div className="w-8 md:w-12 h-px bg-gray-300 -mt-6"></div>
-            <div className="flex flex-col items-center gap-2 min-w-[60px]">
-              <div className="w-10 h-10 rounded-full bg-white text-gray-400 border border-gray-200 flex items-center justify-center">
-                <CreditCard size={18} />
-              </div>
-              <span className="text-xs font-medium text-textMuted">Payment</span>
-            </div>
-            <div className="w-8 md:w-12 h-px bg-gray-300 -mt-6"></div>
-            <div className="flex flex-col items-center gap-2 min-w-[60px]">
-              <div className="w-10 h-10 rounded-full bg-white text-gray-400 border border-gray-200 flex items-center justify-center">
-                <CheckCircle size={18} />
-              </div>
-              <span className="text-xs font-medium text-textMuted text-center leading-tight">Order<br/>Placed</span>
-            </div>
-          </div>
-        </div>
+        <ProgressBanner activeStep="cart" />
 
         {cart.items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-3xl border border-gray-100 shadow-sm">
@@ -213,9 +168,9 @@ export function Cart() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-textMuted font-medium flex items-center gap-1">
-                      Estimated Tax <Info size={14} className="text-gray-400" />
+                      GST (5%) <Info size={14} className="text-gray-400" />
                     </span>
-                    <span className="font-semibold text-textMain">${estimatedTax.toFixed(2)}</span>
+                    <span className="font-semibold text-textMain">${gst.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -254,7 +209,10 @@ export function Cart() {
                       <h4 className="text-xs font-bold text-textMain line-clamp-1 mb-0.5">{product.name}</h4>
                       <div className="flex items-center justify-between mt-auto">
                         <p className="text-[10px] font-bold text-primary">${product.price.toFixed(2)}<span className="text-[8px] text-textMuted font-normal">/{product.unit}</span></p>
-                        <button className="w-5 h-5 rounded-full border border-gray-200 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-xs">
+                        <button 
+                          className="w-5 h-5 rounded-full border border-gray-200 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-xs"
+                          onClick={(e) => { e.stopPropagation(); addItem(product); }}
+                        >
                           +
                         </button>
                       </div>

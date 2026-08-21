@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Globe, MessageCircle, Camera, Mail, Phone, MapPin } from 'lucide-react';
+import { MOCK_DATA } from '../data/mockData';
 
 export function Footer() {
   return (
@@ -37,10 +38,11 @@ export function Footer() {
           <div>
             <h3 className="font-heading font-semibold text-textMain mb-4">Categories</h3>
             <ul className="space-y-2 text-sm text-textMuted">
-              <li><Link to="/category/c1" className="hover:text-primary transition-colors">Fresh Fruits</Link></li>
-              <li><Link to="/category/c2" className="hover:text-primary transition-colors">Vegetables</Link></li>
-              <li><Link to="/category/c3" className="hover:text-primary transition-colors">Exotic</Link></li>
-              <li><Link to="/category/c4" className="hover:text-primary transition-colors">Bundles</Link></li>
+              {MOCK_DATA.categories.slice(0, 4).map(cat => (
+                <li key={cat.id}>
+                  <Link to={`/category/${cat.id}`} className="hover:text-primary transition-colors">{cat.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -17,6 +17,12 @@ export function Header({ onSearch }) {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      navigate(`/categories?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <>
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between shadow-sm">
@@ -34,6 +40,7 @@ export function Header({ onSearch }) {
               className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-all"
               value={searchQuery}
               onChange={handleSearch}
+              onKeyDown={handleKeyDown}
             />
           </div>
         </div>
@@ -67,6 +74,7 @@ export function Header({ onSearch }) {
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm"
             value={searchQuery}
             onChange={handleSearch}
+            onKeyDown={handleKeyDown}
           />
         </div>
       </div>
