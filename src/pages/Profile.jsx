@@ -148,12 +148,12 @@ export function Profile() {
           <span className="font-semibold text-textMain">{getBreadcrumbLabel()}</span>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-row gap-3 lg:gap-8">
 
           {/* Left Sidebar */}
-          <aside className="w-full lg:w-64 shrink-0">
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col h-full sticky top-8">
-              <nav className="flex-1 space-y-1 mb-8">
+          <aside className="w-[60px] lg:w-64 shrink-0">
+            <div className="bg-white rounded-2xl p-2 lg:p-4 shadow-sm border border-gray-100 flex flex-col h-full sticky top-8">
+              <nav className="flex-1 space-y-2 mb-8">
                 {menuItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
@@ -161,26 +161,26 @@ export function Profile() {
                     <button
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors text-left ${isActive ? 'bg-green-50 text-primary font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-textMain font-medium'}`}
+                      className={`w-full flex items-center justify-center lg:justify-start gap-3 p-3 lg:px-4 lg:py-3 rounded-xl transition-colors text-left ${isActive ? 'bg-green-50 text-primary font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-textMain font-medium'}`}
                     >
-                      <Icon size={20} className={isActive ? 'text-primary' : 'text-gray-400'} />
-                      <span>{item.label}</span>
+                      <Icon size={20} className={`shrink-0 ${isActive ? 'text-primary' : 'text-gray-400'}`} />
+                      <span className="hidden lg:block whitespace-nowrap">{item.label}</span>
                     </button>
                   );
                 })}
               </nav>
 
-              <div className="pt-4 border-t border-gray-100 space-y-1">
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors text-left text-gray-600 hover:bg-gray-50 hover:text-textMain font-medium">
-                  <HelpCircle size={20} className="text-gray-400" />
-                  <span>Help & Support</span>
+              <div className="pt-4 border-t border-gray-100 space-y-2">
+                <button className="w-full flex items-center justify-center lg:justify-start gap-3 p-3 lg:px-4 lg:py-3 rounded-xl transition-colors text-left text-gray-600 hover:bg-gray-50 hover:text-textMain font-medium">
+                  <HelpCircle size={20} className="text-gray-400 shrink-0" />
+                  <span className="hidden lg:block whitespace-nowrap">Help & Support</span>
                 </button>
                 <button
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors text-left text-red-500 hover:bg-red-50 font-bold mt-2"
+                  className="w-full flex items-center justify-center lg:justify-start gap-3 p-3 lg:px-4 lg:py-3 rounded-xl transition-colors text-left text-red-500 hover:bg-red-50 font-bold mt-2"
                   onClick={() => navigate('/login')}
                 >
-                  <LogOut size={20} />
-                  <span>Logout</span>
+                  <LogOut size={20} className="shrink-0" />
+                  <span className="hidden lg:block whitespace-nowrap">Logout</span>
                 </button>
               </div>
             </div>
@@ -194,13 +194,13 @@ export function Profile() {
             {/* TAB: ORDERS */}
             {activeTab === 'orders' && (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                  <h2 className="text-xl font-bold text-textMain">Order History</h2>
-                  <div className="flex gap-2">
+                <div className="p-3 lg:p-6 border-b border-gray-100 flex flex-col lg:flex-row justify-between items-start lg:items-center bg-gray-50/50 gap-2 lg:gap-0">
+                  <h2 className="text-base lg:text-xl font-bold text-textMain">Order History</h2>
+                  <div className="flex w-full lg:w-auto gap-2">
                     <select 
                       value={orderFilter}
                       onChange={e => setOrderFilter(e.target.value)}
-                      className="px-3 py-2 border border-gray-200 rounded-lg text-sm text-textMain outline-none focus:border-primary"
+                      className="w-full lg:w-auto px-2 py-1.5 lg:px-3 lg:py-2 border border-gray-200 rounded-lg text-xs lg:text-sm text-textMain outline-none focus:border-primary"
                     >
                       <option value="Past 3 months">Past 3 months</option>
                       <option value="Past 6 months">Past 6 months</option>
@@ -208,34 +208,34 @@ export function Profile() {
                     </select>
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="space-y-6">
+                <div className="p-3 lg:p-6">
+                  <div className="space-y-4 lg:space-y-6">
                     {filteredOrders.length > 0 ? filteredOrders.map((order, idx) => {
                       const productImage = order.products && order.products.length > 0 
                         ? order.products[0].image 
                         : MOCK_DATA.products[0].image;
                       
                       return (
-                        <div key={order.id} className="border border-gray-100 rounded-xl p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-primary/30 transition-colors">
-                          <div className="flex gap-4 items-center">
-                            <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-gray-50 border border-gray-100">
+                        <div key={order.id} className="border border-gray-100 rounded-xl p-3 lg:p-6 flex flex-col md:flex-row md:items-center justify-between gap-3 lg:gap-4 hover:border-primary/30 transition-colors">
+                          <div className="flex gap-3 lg:gap-4 items-center">
+                            <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-xl overflow-hidden shrink-0 bg-gray-50 border border-gray-100">
                               <img src={productImage} alt="Order" className="w-full h-full object-cover" />
                             </div>
                             <div>
-                              <p className="font-bold text-textMain mb-1">Order #{order.id}</p>
-                              <p className="text-xs text-textMuted mb-2">Placed on {order.date} • {order.items} Items</p>
-                              <span className={`text-xs font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1 ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
-                                {order.status === 'Delivered' && <CheckCircle size={12} />}
+                              <p className="text-sm lg:text-base font-bold text-textMain mb-0.5 lg:mb-1">Order #{order.id}</p>
+                              <p className="text-[10px] lg:text-xs text-textMuted mb-1 lg:mb-2">Placed on {order.date} • {order.items} Items</p>
+                              <span className={`text-[10px] lg:text-xs font-bold px-2 py-0.5 lg:px-2.5 lg:py-1 rounded-full inline-flex items-center gap-1 ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
+                                {order.status === 'Delivered' && <CheckCircle className="w-2.5 h-2.5 lg:w-3 lg:h-3" />}
                                 {order.status}
                               </span>
                             </div>
                           </div>
-                          <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center border-t md:border-t-0 border-gray-100 pt-4 md:pt-0">
-                            <p className="text-lg font-bold text-textMain md:mb-3">${order.total.toFixed(2)}</p>
+                          <div className="flex items-center md:flex-col md:items-end justify-between md:justify-center border-t md:border-t-0 border-gray-100 pt-3 md:pt-0 mt-2 md:mt-0">
+                            <p className="text-sm lg:text-lg font-bold text-textMain md:mb-3">${order.total.toFixed(2)}</p>
                             <div className="flex gap-2">
                               <button 
                                 onClick={() => navigate(`/order/${order.id}`)}
-                                className="px-4 py-2 text-sm font-bold text-primary border border-primary/20 bg-green-50 rounded-lg hover:bg-primary hover:text-white transition-colors"
+                                className="px-3 py-1.5 lg:px-4 lg:py-2 text-[10px] lg:text-sm font-bold text-primary border border-primary/20 bg-green-50 rounded-lg hover:bg-primary hover:text-white transition-colors whitespace-nowrap"
                               >
                                 View Details
                               </button>
@@ -244,7 +244,7 @@ export function Profile() {
                         </div>
                       );
                     }) : (
-                      <div className="text-center py-8 text-textMuted">No orders found for this time period.</div>
+                      <div className="text-center py-8 text-textMuted text-xs lg:text-base">No orders found for this time period.</div>
                     )}
                   </div>
                 </div>
@@ -365,29 +365,29 @@ export function Profile() {
             {/* TAB: SETTINGS */}
             {activeTab === 'settings' && (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-                  <h2 className="text-xl font-bold text-textMain">Account Settings</h2>
-                  <p className="text-sm text-textMuted mt-1">Manage your personal information and preferences.</p>
+                <div className="p-3 lg:p-6 border-b border-gray-100 bg-gray-50/50">
+                  <h2 className="text-base lg:text-xl font-bold text-textMain text-center sm:text-left">Account Settings</h2>
+                  <p className="hidden sm:block text-[10px] lg:text-sm text-textMuted mt-1">Manage your personal information and preferences.</p>
                 </div>
-                <div className="p-6 md:p-8 max-w-2xl">
-                  <form className="space-y-6" onSubmit={handleSaveSettings}>
+                <div className="p-3 lg:p-6 md:p-8 max-w-2xl">
+                  <form className="space-y-4 lg:space-y-6" onSubmit={handleSaveSettings}>
 
-                    <div className="flex items-center gap-6 mb-8">
-                      <div className="relative w-20 h-20">
-                        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-2xl font-bold text-primary overflow-hidden">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 lg:gap-6 mb-6 lg:mb-8">
+                      <div className="relative w-16 h-16 lg:w-20 lg:h-20 shrink-0">
+                        <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-green-100 flex items-center justify-center text-xl lg:text-2xl font-bold text-primary overflow-hidden">
                           {profileImage ? (
                             <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
                           ) : (
                             draftSettings.firstName ? draftSettings.firstName.charAt(0).toUpperCase() : 'U'
                           )}
                         </div>
-                        <button type="button" onClick={() => fileInputRef.current?.click()} className="absolute bottom-0 right-0 w-7 h-7 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-500 shadow-sm hover:text-primary z-10">
-                          <Camera size={12} />
+                        <button type="button" onClick={() => fileInputRef.current?.click()} className="absolute bottom-0 right-0 w-6 h-6 lg:w-7 lg:h-7 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-500 shadow-sm hover:text-primary z-10">
+                          <Camera size={12} className="w-3 h-3 lg:w-4 lg:h-4" />
                         </button>
                       </div>
-                      <div>
-                        <h3 className="font-bold text-textMain mb-2">Profile Photo</h3>
-                        <div className="flex gap-2">
+                      <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                        <h3 className="font-bold text-sm lg:text-base text-textMain mb-1.5 lg:mb-2">Profile Photo</h3>
+                        <div className="flex gap-2 justify-center sm:justify-start">
                           <input
                             type="file"
                             accept="image/png, image/jpeg"
@@ -395,49 +395,49 @@ export function Profile() {
                             className="hidden"
                             onChange={handlePhotoUpload}
                           />
-                          <button type="button" onClick={() => fileInputRef.current?.click()} className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-50">Upload</button>
-                          <button type="button" onClick={handlePhotoRemove} className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-md text-red-500 hover:bg-red-50">Remove</button>
+                          <button type="button" onClick={() => fileInputRef.current?.click()} className="text-[10px] lg:text-xs font-bold px-2.5 py-1.5 lg:px-3 lg:py-1.5 border border-gray-200 rounded-md hover:bg-gray-50">Upload</button>
+                          <button type="button" onClick={handlePhotoRemove} className="text-[10px] lg:text-xs font-bold px-2.5 py-1.5 lg:px-3 lg:py-1.5 border border-gray-200 rounded-md text-red-500 hover:bg-red-50">Remove</button>
                         </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-textMain">First Name</label>
-                        <input type="text" value={draftSettings.firstName} onChange={e => setDraftSettings({ ...draftSettings, firstName: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-primary" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                      <div className="space-y-1 lg:space-y-2">
+                        <label className="text-xs lg:text-sm font-bold text-textMain">First Name</label>
+                        <input type="text" value={draftSettings.firstName} onChange={e => setDraftSettings({ ...draftSettings, firstName: e.target.value })} className="w-full px-3 py-2 lg:px-4 lg:py-2.5 rounded-lg lg:rounded-xl border border-gray-200 text-xs lg:text-sm focus:outline-none focus:border-primary" />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-textMain">Last Name</label>
-                        <input type="text" value={draftSettings.lastName} onChange={e => setDraftSettings({ ...draftSettings, lastName: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-primary" />
+                      <div className="space-y-1 lg:space-y-2">
+                        <label className="text-xs lg:text-sm font-bold text-textMain">Last Name</label>
+                        <input type="text" value={draftSettings.lastName} onChange={e => setDraftSettings({ ...draftSettings, lastName: e.target.value })} className="w-full px-3 py-2 lg:px-4 lg:py-2.5 rounded-lg lg:rounded-xl border border-gray-200 text-xs lg:text-sm focus:outline-none focus:border-primary" />
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-textMain">Email Address</label>
-                      <input type="email" value={draftSettings.email} onChange={e => setDraftSettings({ ...draftSettings, email: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-primary" />
+                    <div className="space-y-1 lg:space-y-2">
+                      <label className="text-xs lg:text-sm font-bold text-textMain">Email Address</label>
+                      <input type="email" value={draftSettings.email} onChange={e => setDraftSettings({ ...draftSettings, email: e.target.value })} className="w-full px-3 py-2 lg:px-4 lg:py-2.5 rounded-lg lg:rounded-xl border border-gray-200 text-xs lg:text-sm focus:outline-none focus:border-primary" />
                     </div>
 
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-textMain">Phone Number</label>
-                      <input type="tel" value={draftSettings.phone} onChange={e => setDraftSettings({ ...draftSettings, phone: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-primary" />
+                    <div className="space-y-1 lg:space-y-2">
+                      <label className="text-xs lg:text-sm font-bold text-textMain">Phone Number</label>
+                      <input type="tel" value={draftSettings.phone} onChange={e => setDraftSettings({ ...draftSettings, phone: e.target.value })} className="w-full px-3 py-2 lg:px-4 lg:py-2.5 rounded-lg lg:rounded-xl border border-gray-200 text-xs lg:text-sm focus:outline-none focus:border-primary" />
                     </div>
 
-                    <div className="pt-6 border-t border-gray-100">
-                      <h3 className="font-bold text-textMain mb-4">Email Notifications</h3>
-                      <label className="flex items-center gap-3 mb-3 cursor-pointer">
-                        <input type="checkbox" checked={draftSettings.orderUpdates} onChange={e => setDraftSettings({ ...draftSettings, orderUpdates: e.target.checked })} className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary" />
-                        <span className="text-sm text-textMuted">Order updates and delivery status</span>
+                    <div className="pt-4 lg:pt-6 border-t border-gray-100">
+                      <h3 className="font-bold text-sm lg:text-base text-textMain mb-3 lg:mb-4">Email Notifications</h3>
+                      <label className="flex items-start lg:items-center gap-2 lg:gap-3 mb-3 cursor-pointer">
+                        <input type="checkbox" checked={draftSettings.orderUpdates} onChange={e => setDraftSettings({ ...draftSettings, orderUpdates: e.target.checked })} className="mt-0.5 lg:mt-0 w-3 h-3 lg:w-4 lg:h-4 text-primary rounded border-gray-300 focus:ring-primary shrink-0" />
+                        <span className="text-[10px] lg:text-sm text-textMuted leading-tight lg:leading-normal">Order updates and delivery status</span>
                       </label>
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" checked={draftSettings.promotions} onChange={e => setDraftSettings({ ...draftSettings, promotions: e.target.checked })} className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary" />
-                        <span className="text-sm text-textMuted">Promotions, new products, and sales</span>
+                      <label className="flex items-start lg:items-center gap-2 lg:gap-3 cursor-pointer">
+                        <input type="checkbox" checked={draftSettings.promotions} onChange={e => setDraftSettings({ ...draftSettings, promotions: e.target.checked })} className="mt-0.5 lg:mt-0 w-3 h-3 lg:w-4 lg:h-4 text-primary rounded border-gray-300 focus:ring-primary shrink-0" />
+                        <span className="text-[10px] lg:text-sm text-textMuted leading-tight lg:leading-normal">Promotions, new products, and sales</span>
                       </label>
                     </div>
 
-                    <div className="pt-6 flex justify-end gap-3">
-                      <button type="button" onClick={() => setDraftSettings(accountSettings)} className="px-6 py-2.5 rounded-xl border border-gray-200 text-sm font-bold hover:bg-gray-50 transition-colors">Cancel</button>
-                      <button type="submit" className="px-6 py-2.5 rounded-xl bg-primary text-white text-sm font-bold hover:bg-green-700 transition-colors flex items-center gap-2">
-                        {isSavedSettings && <CheckCircle size={16} />}
+                    <div className="pt-4 lg:pt-6 flex flex-col sm:flex-row justify-end gap-2 lg:gap-3">
+                      <button type="button" onClick={() => setDraftSettings(accountSettings)} className="w-full sm:w-auto px-4 py-2 lg:px-6 lg:py-2.5 rounded-lg lg:rounded-xl border border-gray-200 text-xs lg:text-sm font-bold hover:bg-gray-50 transition-colors text-center">Cancel</button>
+                      <button type="submit" className="w-full sm:w-auto px-4 py-2 lg:px-6 lg:py-2.5 rounded-lg lg:rounded-xl bg-primary text-white text-xs lg:text-sm font-bold hover:bg-green-700 transition-colors flex items-center justify-center gap-1.5 lg:gap-2">
+                        {isSavedSettings && <CheckCircle className="w-3 h-3 lg:w-4 lg:h-4" />}
                         {isSavedSettings ? 'Saved!' : 'Save Changes'}
                       </button>
                     </div>

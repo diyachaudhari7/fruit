@@ -37,8 +37,8 @@ function App() {
         <CartProvider>
           <BrowserRouter>
           <ScrollToTop />
-          <div className="min-h-screen flex flex-col bg-background font-body text-textMain">
-            <main className="flex-1 bg-white">
+          <div className="min-h-screen flex flex-col bg-background font-body text-textMain overflow-x-hidden w-full max-w-full">
+            <main className="flex-none md:flex-1 bg-white w-full max-w-full">
               <Routes>
                 <Route path="/" element={<Navigate to="/signup" replace />} />
                 <Route path="/signup" element={<Signup />} />

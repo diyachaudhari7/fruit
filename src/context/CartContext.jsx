@@ -78,8 +78,14 @@ export function CartProvider({ children }) {
     <CartContext.Provider value={{ cart: state, addItem, removeItem, updateQuantity, clearCart }}>
       {children}
       {toastMessage && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
-          <p className="text-sm font-medium">{toastMessage}</p>
+        <div className="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-2xl z-50 flex items-center gap-3 px-4 py-3 animate-in fade-in slide-in-from-bottom-8 duration-300 w-[90vw] max-w-sm sm:w-auto">
+          <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <p className="text-sm font-semibold text-textMain">{toastMessage}</p>
         </div>
       )}
     </CartContext.Provider>

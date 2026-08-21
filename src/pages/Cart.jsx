@@ -69,12 +69,12 @@ export function Cart() {
 
                 <div className="space-y-6">
                   {cart.items.map((item, index) => (
-                    <div key={item.id} className={`flex flex-col sm:flex-row items-center gap-6 ${index !== cart.items.length - 1 ? 'border-b border-gray-50 pb-6' : ''}`}>
-                      <div className="w-full sm:w-24 h-32 sm:h-24 bg-gray-50 rounded-2xl overflow-hidden flex-shrink-0 p-2">
+                    <div key={item.id} className={`flex flex-row items-start sm:items-center gap-4 sm:gap-6 ${index !== cart.items.length - 1 ? 'border-b border-gray-50 pb-6' : ''}`}>
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-50 rounded-2xl overflow-hidden flex-shrink-0 p-1.5 sm:p-2">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded-xl" />
                       </div>
                       
-                      <div className="flex-1 flex flex-col w-full">
+                      <div className="flex-1 flex flex-col w-full h-full justify-between">
                         <div className="flex justify-between items-start mb-2">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
@@ -93,12 +93,12 @@ export function Cart() {
                           </button>
                         </div>
                         
-                        <div className="flex items-end justify-between mt-auto">
+                        <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-auto gap-3 sm:gap-0">
                           <div>
                             <p className="font-bold text-primary">${item.price.toFixed(2)} <span className="text-[10px] text-textMuted uppercase font-medium">/ {item.unit}</span></p>
                           </div>
                           
-                          <div className="flex items-center gap-6">
+                          <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 w-full sm:w-auto">
                             <div className="flex items-center border border-gray-200 rounded-full h-9 bg-white">
                               <button 
                                 className="w-9 h-full flex items-center justify-center font-bold text-gray-500 hover:text-primary transition-colors"

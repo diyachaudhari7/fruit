@@ -89,60 +89,68 @@ export function OrderTracking() {
         </div>
 
         {/* Timeline Section */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 sm:p-12 mb-8 shadow-sm overflow-x-auto">
-          <div className="min-w-[600px]">
-            <div className="flex items-center justify-between relative mb-8">
+        <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 md:p-12 mb-8 shadow-sm overflow-x-auto md:overflow-visible">
+          <div className="w-full">
+            <div className="flex flex-row items-center justify-between relative gap-2 md:gap-0">
               
-              {/* Connecting Lines */}
-              <div className="absolute top-6 left-[10%] right-[10%] h-0.5 bg-gray-200 -z-10">
+              {/* Connecting Lines (Horizontal) */}
+              <div className="absolute top-4 md:top-6 left-[10%] right-[10%] h-0.5 bg-gray-200 -z-10">
                 <div className="absolute top-0 left-0 h-full bg-[#298E3A] w-[50%]"></div>
               </div>
               
               {/* Step 1: Order Placed */}
-              <div className="flex flex-col items-center w-1/4">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-[#298E3A] rounded-full flex items-center justify-center shadow-sm">
-                    <ShoppingCart size={20} className="text-white" />
+              <div className="flex flex-col items-center w-1/4 gap-0">
+                <div className="relative shrink-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-[#298E3A] rounded-full flex items-center justify-center shadow-sm">
+                    <ShoppingCart className="text-white w-4 h-4 md:w-5 md:h-5" />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#298E3A] rounded-full border-2 border-white flex items-center justify-center">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 md:w-5 md:h-5 bg-[#298E3A] rounded-full border-2 border-white flex items-center justify-center">
+                    <Check className="text-white w-2 h-2 md:w-3 md:h-3" strokeWidth={3} />
                   </div>
                 </div>
-                <h4 className="font-bold text-sm text-textMain mt-4 mb-1">Order Placed</h4>
-                <p className="text-xs text-textMuted">21 May, 10:00 AM</p>
+                <div className="text-center mt-1.5 md:mt-4">
+                  <h4 className="font-bold text-[9px] sm:text-[10px] md:text-sm text-textMain mb-0.5 md:mb-1 leading-tight">Order Placed</h4>
+                  <p className="text-[7px] sm:text-[8px] md:text-xs text-textMuted hidden sm:block">21 May, 10:00 AM</p>
+                </div>
               </div>
 
               {/* Step 2: Confirmed */}
-              <div className="flex flex-col items-center w-1/4">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-[#298E3A] rounded-full flex items-center justify-center shadow-sm">
-                    <Check size={24} className="text-white" strokeWidth={3} />
+              <div className="flex flex-col items-center w-1/4 gap-0">
+                <div className="relative shrink-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-[#298E3A] rounded-full flex items-center justify-center shadow-sm">
+                    <Check className="text-white w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
                   </div>
                 </div>
-                <h4 className="font-bold text-sm text-textMain mt-4 mb-1">Confirmed</h4>
-                <p className="text-xs text-textMuted">21 May, 10:15 AM</p>
+                <div className="text-center mt-1.5 md:mt-4">
+                  <h4 className="font-bold text-[9px] sm:text-[10px] md:text-sm text-textMain mb-0.5 md:mb-1 leading-tight">Confirmed</h4>
+                  <p className="text-[7px] sm:text-[8px] md:text-xs text-textMuted hidden sm:block">21 May, 10:15 AM</p>
+                </div>
               </div>
 
               {/* Step 3: Out for Delivery */}
-              <div className="flex flex-col items-center w-1/4">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border-2 border-[#298E3A] ring-4 ring-[#EAF5E9]">
-                    <Truck size={20} className="text-[#298E3A]" />
+              <div className="flex flex-col items-center w-1/4 gap-0">
+                <div className="relative shrink-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-sm border-2 border-[#298E3A] ring-2 md:ring-4 ring-[#EAF5E9]">
+                    <Truck className="text-[#298E3A] w-4 h-4 md:w-5 md:h-5" />
                   </div>
                 </div>
-                <h4 className="font-bold text-sm text-textMain mt-4 mb-1">Out for Delivery</h4>
-                <p className="text-xs text-textMuted">21 May, 11:30 AM</p>
+                <div className="text-center mt-1.5 md:mt-4">
+                  <h4 className="font-bold text-[9px] sm:text-[10px] md:text-sm text-textMain mb-0.5 md:mb-1 leading-tight">Out for Delivery</h4>
+                  <p className="text-[7px] sm:text-[8px] md:text-xs text-textMuted hidden sm:block">21 May, 11:30 AM</p>
+                </div>
               </div>
 
               {/* Step 4: Delivered */}
-              <div className="flex flex-col items-center w-1/4">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center shadow-sm border border-gray-200">
-                    <Home size={20} className="text-gray-400" />
+              <div className="flex flex-col items-center w-1/4 gap-0">
+                <div className="relative shrink-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-gray-100 rounded-full flex items-center justify-center shadow-sm border border-gray-200">
+                    <Home className="text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                   </div>
                 </div>
-                <h4 className="font-bold text-sm text-textMain mt-4 mb-1">Delivered</h4>
-                <p className="text-xs text-textMuted">Pending</p>
+                <div className="text-center mt-1.5 md:mt-4">
+                  <h4 className="font-bold text-[9px] sm:text-[10px] md:text-sm text-textMain mb-0.5 md:mb-1 leading-tight">Delivered</h4>
+                  <p className="text-[7px] sm:text-[8px] md:text-xs text-textMuted hidden sm:block">Pending</p>
+                </div>
               </div>
 
             </div>
@@ -150,18 +158,18 @@ export function OrderTracking() {
         </div>
 
         {/* Delivery Details */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-6 mb-10 shadow-sm">
-          <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-100">
-            <div className="w-8 h-8 rounded-full bg-[#EAF5E9] text-[#16A34A] flex items-center justify-center">
-              <MapPin size={16} />
+        <div className="bg-white border border-gray-100 rounded-2xl p-4 md:p-6 mb-8 md:mb-10 shadow-sm">
+          <div className="flex items-center gap-2 mb-3 md:mb-6 pb-3 md:pb-4 border-b border-gray-100">
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#EAF5E9] text-[#16A34A] flex items-center justify-center shrink-0">
+              <MapPin size={14} className="md:w-4 md:h-4" />
             </div>
-            <h3 className="font-bold text-textMain">Delivery Details</h3>
+            <h3 className="font-bold text-sm md:text-lg text-textMain">Delivery Details</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             <div className="md:pr-8 md:border-r border-gray-100">
-              <p className="text-xs text-textMuted mb-2">Delivery Address</p>
-              <div className="text-sm font-medium text-textMain space-y-1">
+              <p className="text-[10px] md:text-xs text-textMuted mb-1 md:mb-2">Delivery Address</p>
+              <div className="text-xs md:text-sm font-medium text-textMain space-y-0.5 md:space-y-1">
                 <p>123 Fresh Valley Road, Apartment 4B</p>
                 <p>Green City, GC 10020</p>
                 <p>+1 234 567 8900</p>
@@ -169,22 +177,22 @@ export function OrderTracking() {
             </div>
 
             <div className="md:px-4 md:border-r border-gray-100">
-              <p className="text-xs text-textMuted mb-2">Delivery Partner</p>
-              <div className="text-sm font-medium text-textMain space-y-2">
+              <p className="text-[10px] md:text-xs text-textMuted mb-1 md:mb-2">Delivery Partner</p>
+              <div className="text-xs md:text-sm font-medium text-textMain space-y-1 md:space-y-2">
                 <p>Freshly Delivery</p>
                 <p className="flex items-center gap-1.5 text-[#16A34A]">
-                  <Phone size={14} /> +1 987 654 3210
+                  <Phone size={12} className="md:w-[14px] md:h-[14px]" /> +1 987 654 3210
                 </p>
               </div>
             </div>
 
             <div className="md:pl-4">
-              <p className="text-xs text-textMuted mb-2">Payment Method</p>
-              <div className="text-sm font-medium text-textMain mb-4">
+              <p className="text-[10px] md:text-xs text-textMuted mb-1 md:mb-2">Payment Method</p>
+              <div className="text-xs md:text-sm font-medium text-textMain mb-2 md:mb-4">
                 <p>Visa ending in 4242</p>
               </div>
-              <p className="text-xs text-textMuted mb-1">Total Amount</p>
-              <p className="font-bold text-[#16A34A]">$17.46</p>
+              <p className="text-[10px] md:text-xs text-textMuted mb-0.5 md:mb-1">Total Amount</p>
+              <p className="font-bold text-sm md:text-lg text-[#16A34A]">$17.46</p>
             </div>
           </div>
         </div>
